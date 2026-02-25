@@ -15,7 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-@Data
+@AllArgsConstructor
 public class CategoryController {
 
     private CategoryService categoryService;
@@ -34,5 +34,29 @@ public class CategoryController {
     public ResponseEntity<Category> addCategory(@RequestBody Category category) throws Exception {
         Category newCategory = this.categoryService.createCategory(category);
         return new ResponseEntity<>(newCategory, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/category/{id}")
+    public ResponseEntity<Category> getCategory(@PathVariable Integer id) throws Exception
+    {
+        Category category = this.categoryService.getCategoryById(id);
+        return new ResponseEntity<>(category, HttpStatus.OK);
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity<Iterable<Category>> getAllCategories() throws Exception
+    {
+        Iterable<Category> categories = this.categoryService.getAllCategories();
+        return new ResponseEntity<>(categories, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/category/{id}")
+    public ResponseEntity<Map<String, String>> removeCategoryById(@PathVariable Integer id) throws Exception
+    {
+        this.categoryService.deleteCategoryById(id);
+        Map<String, String> response = new HashMap<>();
+        response.put("status", "OK");
+        response.put("info", "La category à été supprimé");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

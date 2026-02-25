@@ -28,14 +28,14 @@ public class CategoryService {
     }
 
     //Méthode qui retourne une category par son ID
-    public Optional<Category> getCategoryById(Integer id) throws Exception {
+    public Category getCategoryById(Integer id) throws Exception {
         //Récupération de la category (findById du repository)
         Optional<Category> category = categoryRepository.findById(id);
         //Test si elle n'existe pas
         if (!category.isPresent()) {
             throw new Exception("La category n'existe pas");
         }
-        return category;
+        return category.get();
     }
 
     //méthode qui retourne la liste de toutes les categories
@@ -54,5 +54,15 @@ public class CategoryService {
             throw new Exception("La category " + name + " existe déja");
         }
         return true;
+    }
+
+    public void deleteCategoryById(Integer id) throws Exception
+    {
+        try {
+            this.categoryRepository.deleteById(id);
+        } catch (Exception e)
+        {
+            throw new Exception("Suppression impossible");
+        }
     }
 }

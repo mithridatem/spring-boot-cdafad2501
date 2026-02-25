@@ -1,0 +1,15 @@
+meta {
+  name: Supprimer une categorie
+  type: http
+  seq: 5
+}
+
+delete {
+  url: http://127.0.0.1:9000/api/category/4
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}
