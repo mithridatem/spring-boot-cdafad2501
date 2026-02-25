@@ -1,6 +1,7 @@
 package com.adrar.cdafad.controller;
 
 import com.adrar.cdafad.entity.Category;
+import com.adrar.cdafad.exception.category.CategoryIsPresentException;
 import com.adrar.cdafad.repository.CategoryRepository;
 import com.adrar.cdafad.service.CategoryService;
 import lombok.AllArgsConstructor;
@@ -31,20 +32,20 @@ public class CategoryController {
     }
 
     @PostMapping("/category")
-    public ResponseEntity<Category> addCategory(@RequestBody Category category) throws Exception {
+    public ResponseEntity<Category> addCategory(@RequestBody Category category) {
         Category newCategory = this.categoryService.createCategory(category);
         return new ResponseEntity<>(newCategory, HttpStatus.CREATED);
     }
 
     @GetMapping("/category/{id}")
-    public ResponseEntity<Category> getCategory(@PathVariable Integer id) throws Exception
+    public ResponseEntity<Category> getCategory(@PathVariable Integer id)
     {
         Category category = this.categoryService.getCategoryById(id);
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
     @GetMapping("/categories")
-    public ResponseEntity<Iterable<Category>> getAllCategories() throws Exception
+    public ResponseEntity<Iterable<Category>> getAllCategories()
     {
         Iterable<Category> categories = this.categoryService.getAllCategories();
         return new ResponseEntity<>(categories, HttpStatus.OK);
