@@ -1,7 +1,10 @@
 package com.adrar.cdafad.entity;
 
+import com.adrar.cdafad.validation.PastOrPresentYear;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.sql.Date;
@@ -18,11 +21,16 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false, length = 50)
+    @NotBlank(message = "Le titre est vide")
+    @Length(min = 2, max = 50)
     private String title;
     @Column(length = 255)
+    @NotBlank(message = "La description est vide")
+    @Length(min = 5, max = 255)
     private String description;
     @Column(name = "publish_at")
     @Temporal(TemporalType.DATE)
+    @PastOrPresentYear(message = "la date doit être comprise entre 1947 et la date courante")
     private Date publishAt;
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "manufacturer_id")
