@@ -1,4 +1,4 @@
-package com.adrar.cdafad.controller;
+package com.adrar.cdafad.controller.advice;
 
 import com.adrar.cdafad.exception.category.CategoryIsNotExistsException;
 import com.adrar.cdafad.exception.category.CategoryIsPresentException;
