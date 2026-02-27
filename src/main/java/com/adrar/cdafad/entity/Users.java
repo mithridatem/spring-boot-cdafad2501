@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="utilisateur")
@@ -20,4 +22,10 @@ public class Users {
     private String firstname;
     @Column(nullable = false, length = 50)
     private String lastname;
+    @Column(nullable = false)
+    @ManyToMany
+    @JoinTable(name = "utilisateur_game",
+        joinColumns = @JoinColumn( name = "utilisateur_id" ),
+        inverseJoinColumns = @JoinColumn( name = "game_id" ) )
+    private List<Game> games = new ArrayList<>();
 }
