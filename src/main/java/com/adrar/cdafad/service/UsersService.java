@@ -23,20 +23,20 @@ public class UsersService {
     public Users createUsers(Users users) {
 
         //Si le compte déjà
-        if (usersRepository.findByEmail(users.getEmail()).isPresent())
+        if (usersRepository.findByUsername(users.getUsername()).isPresent())
         {
             throw new UsersIsPresentException();
         }
         return usersRepository.save(users);
     }
 
-    //Récupérer un Users par son email
+    //Récupérer un Users par son username
     public Users getUsersByEmail(String email) {
-        Optional<Users> users = usersRepository.findByEmail(email);
+        Optional<Users> users = usersRepository.findByUsername(email);
         if (users.isEmpty()) {
             throw new UsersIsNotExistsException();
         }
-        return usersRepository.findByEmail(email).get();
+        return usersRepository.findByUsername(email).get();
     }
 
     //mise à jour de la collection de game d'un users
@@ -46,9 +46,9 @@ public class UsersService {
         if (udpateUsers.isEmpty()) {
             throw new UsersIsNotExistsException();
         }
-        //test si le compte n'existe pas déja (gestion des doublons email)
-        if (!udpateUsers.get().getEmail().equals(users.getEmail()) ) {
-            Optional<Users> verifUsers = this.usersRepository.findByEmail(users.getEmail());
+        //test si le compte n'existe pas déja (gestion des doublons username)
+        if (!udpateUsers.get().getUsername().equals(users.getUsername()) ) {
+            Optional<Users> verifUsers = this.usersRepository.findByUsername(users.getUsername());
             if (verifUsers.isPresent()) {
                 throw new UsersIsPresentException();
             }
@@ -68,11 +68,11 @@ public class UsersService {
 
     public Stream<UsersInfoDTO> getUserDTOByEmail(String email)
     {
-        if (this.usersRepository.findByEmail(email).isEmpty()) {
+        if (this.usersRepository.findByUsername(email).isEmpty()) {
             throw new UsersIsNotExistsException();
         }
         return this.usersRepository
-                .findByEmail(email)
+                .findByUsername(email)
                 .stream()
                 .map(
                 UsersDTOWrapper::wrapUsersToUsersInfoDTO

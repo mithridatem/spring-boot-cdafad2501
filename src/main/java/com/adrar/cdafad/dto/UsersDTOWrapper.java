@@ -7,7 +7,7 @@ public class UsersDTOWrapper {
     public static UsersInfoDTO wrapUsersToUsersInfoDTO(Users users)
     {
        return new UsersInfoDTO(
-               users.getEmail(),
+               users.getUsername(),
                users.getFirstname(),
                users.getLastname()
        );
