@@ -7,9 +7,10 @@ meta {
 get {
   url: http://127.0.0.1:9000/api/users/mathieu@test.com/dto
   body: none
-  auth: inherit
+  auth: bearer
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }
