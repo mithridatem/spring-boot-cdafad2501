@@ -14,4 +14,6 @@ public class Manufacturer {
     private Integer id;
     @Column(nullable = false, unique = true, length = 50)
     private String name;
+    @Column(length = 50, unique = true)
+    private String console;
 }
