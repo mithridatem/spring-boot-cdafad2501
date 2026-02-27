@@ -35,7 +35,7 @@ public class CategoryControllerAdvice {
     }
 
     @ExceptionHandler(CategoryListIsEmptyException.class)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public Map<String, String> CategoryListIsEmpty(CategoryListIsEmptyException e)
     {
         Map<String, String> errorMap = new HashMap<>();
