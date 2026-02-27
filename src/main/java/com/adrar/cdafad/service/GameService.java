@@ -4,6 +4,7 @@ import com.adrar.cdafad.dto.GameDTO;
 import com.adrar.cdafad.dto.GameDTOWrapper;
 import com.adrar.cdafad.entity.Game;
 import com.adrar.cdafad.entity.Manufacturer;
+import com.adrar.cdafad.exception.game.GameIsNotExistsByTitleException;
 import com.adrar.cdafad.exception.game.GameIsNotExistsException;
 import com.adrar.cdafad.exception.game.GameIsPresentException;
 import com.adrar.cdafad.exception.game.GameListIsEmptyException;
@@ -57,7 +58,7 @@ public class GameService {
         Optional<Game> game = this.gameRepository.findByTitle(title);
         //Test si le Game n'existe pas
         if (game.isEmpty()) {
-            throw new GameIsNotExistsException(game.get().getId());
+            throw new GameIsNotExistsByTitleException(title);
         }
         return this.gameRepository
                 .findByTitle(title)

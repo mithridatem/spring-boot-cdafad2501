@@ -7,7 +7,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class Game {
     @Column(name = "publish_at")
     @Temporal(TemporalType.DATE)
     @PastOrPresentYear(message = "la date doit être comprise entre 1947 et la date courante")
-    private Date publishAt;
+    private LocalDate publishAt;
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "manufacturer_id")
     private Manufacturer manufacturer;
@@ -40,4 +40,5 @@ public class Game {
     joinColumns = @JoinColumn( name = "game_id" ),
     inverseJoinColumns = @JoinColumn( name = "category_id" ) )
     private List<Category> categories = new ArrayList<>();
+
 }

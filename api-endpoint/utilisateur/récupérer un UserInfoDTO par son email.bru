@@ -1,0 +1,15 @@
+meta {
+  name: récupérer un UserInfoDTO par son email
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://127.0.0.1:9000/api/users/mathieu@test.com/dto
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

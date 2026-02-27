@@ -1,16 +1,15 @@
 meta {
-  name: Récupérer la liste des Games
+  name: Retourne un GameDTO
   type: http
   seq: 4
 }
 
 get {
-  url: http://127.0.0.1:9000/api/games
+  url: http://127.0.0.1:9000/api/game/Zelda/dto
   body: none
   auth: inherit
 }
 
 settings {
   encodeUrl: true
-  timeout: 0
 }

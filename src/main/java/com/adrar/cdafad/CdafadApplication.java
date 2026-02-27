@@ -9,5 +9,4 @@ public class CdafadApplication {
     public static void main(String[] args) {
         SpringApplication.run(CdafadApplication.class, args);
     }
-
 }

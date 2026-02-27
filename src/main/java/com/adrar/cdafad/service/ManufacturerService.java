@@ -17,8 +17,8 @@ public class ManufacturerService {
     //Méthode qui ajoute un Manufacturer
     public Manufacturer createManufacturer(Manufacturer manufacturer) throws Exception {
 
-        if(this.manufacturerRepository.existsByName(manufacturer.getName())) {
-            throw new Exception("Le Manufacturer avec le  name " + manufacturer.getName() + " existe déja");
+        if(this.manufacturerRepository.existsByNameAndConsole(manufacturer.getName(), manufacturer.getConsole())) {
+            throw new Exception("Le Manufacturer avec le  name " + manufacturer.getName() + " et la " + manufacturer.getConsole() + " existe déja");
         }
         return manufacturerRepository.save(manufacturer);
     }

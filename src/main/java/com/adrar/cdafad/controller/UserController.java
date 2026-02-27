@@ -44,7 +44,7 @@ public class UserController {
         );
     }
 
-    @GetMapping("users/{email}/dto")
+    @GetMapping("/users/{email}/dto")
     public ResponseEntity<Stream<UsersInfoDTO>> getUsersInfoDTOByEmail(@PathVariable String email) {
         return new ResponseEntity<>(
                 this.usersService.getUserDTOByEmail(email),

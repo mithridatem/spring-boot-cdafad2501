@@ -1,6 +1,7 @@
 package com.adrar.cdafad.controller.advice;
 
 import com.adrar.cdafad.exception.category.CategoryIsPresentException;
+import com.adrar.cdafad.exception.game.GameIsNotExistsByTitleException;
 import com.adrar.cdafad.exception.game.GameIsNotExistsException;
 import com.adrar.cdafad.exception.game.GameIsPresentException;
 import com.adrar.cdafad.exception.game.GameListIsEmptyException;
@@ -25,6 +26,15 @@ public class GameControllerAdvice {
         return errorMap;
     }
 
+    @ExceptionHandler(GameIsNotExistsByTitleException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, String> GameByTitleIsNotExists(GameIsNotExistsByTitleException e)
+    {
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put("error", e.getMessage());
+        return errorMap;
+    }
+
     @ExceptionHandler(GameIsPresentException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public Map<String, String> GameIsPresent(GameIsPresentException e)
@@ -42,4 +52,6 @@ public class GameControllerAdvice {
         errorMap.put("error", e.getMessage());
         return errorMap;
     }
+
+
 }

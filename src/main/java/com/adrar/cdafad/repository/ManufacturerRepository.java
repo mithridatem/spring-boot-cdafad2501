@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ManufacturerRepository extends CrudRepository<Manufacturer, Integer> {
-    public boolean existsByName(String name);
+    public boolean existsByNameAndConsole(String name,  String console);
 }
