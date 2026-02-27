@@ -1,5 +1,6 @@
 package com.adrar.cdafad.controller;
 
+import com.adrar.cdafad.dto.GameDTO;
 import com.adrar.cdafad.entity.Game;
 import com.adrar.cdafad.service.GameService;
 import jakarta.validation.Valid;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api")
@@ -37,5 +39,14 @@ public class GameController {
     {
         Iterable<Game> games = this.gameService.getAllGames();
         return new ResponseEntity<>(games, HttpStatus.OK);
+    }
+
+    @GetMapping("/game/{title}/dto")
+    public ResponseEntity<Stream<GameDTO>> getGameByTitle(@PathVariable String title)
+    {
+        return new ResponseEntity<>(
+                this.gameService.getGamesDTOBy(title),
+                HttpStatus.OK
+        );
     }
 }

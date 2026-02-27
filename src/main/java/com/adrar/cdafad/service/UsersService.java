@@ -1,5 +1,7 @@
 package com.adrar.cdafad.service;
 
+import com.adrar.cdafad.dto.UsersDTOWrapper;
+import com.adrar.cdafad.dto.UsersInfoDTO;
 import com.adrar.cdafad.entity.Users;
 import com.adrar.cdafad.exception.users.UsersListIsEmptyException;
 import com.adrar.cdafad.exception.users.UsersIsNotExistsException;
@@ -9,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
@@ -61,5 +64,18 @@ public class UsersService {
             throw new UsersListIsEmptyException();
         }
         return this.usersRepository.findAll();
+    }
+
+    public Stream<UsersInfoDTO> getUserDTOByEmail(String email)
+    {
+        if (this.usersRepository.findByEmail(email).isEmpty()) {
+            throw new UsersIsNotExistsException();
+        }
+        return this.usersRepository
+                .findByEmail(email)
+                .stream()
+                .map(
+                UsersDTOWrapper::wrapUsersToUsersInfoDTO
+            );
     }
 }

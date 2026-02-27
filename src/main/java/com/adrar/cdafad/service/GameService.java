@@ -1,5 +1,7 @@
 package com.adrar.cdafad.service;
 
+import com.adrar.cdafad.dto.GameDTO;
+import com.adrar.cdafad.dto.GameDTOWrapper;
 import com.adrar.cdafad.entity.Game;
 import com.adrar.cdafad.entity.Manufacturer;
 import com.adrar.cdafad.exception.game.GameIsNotExistsException;
@@ -10,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
@@ -47,5 +50,20 @@ public class GameService {
             throw new GameListIsEmptyException();
         }
         return this.gameRepository.findAll();
+    }
+
+    public Stream<GameDTO> getGamesDTOBy(String title)
+    {
+        Optional<Game> game = this.gameRepository.findByTitle(title);
+        //Test si le Game n'existe pas
+        if (game.isEmpty()) {
+            throw new GameIsNotExistsException(game.get().getId());
+        }
+        return this.gameRepository
+                .findByTitle(title)
+                .stream()
+                .map(
+                GameDTOWrapper::wrapGameToGameDTO
+            );
     }
 }
