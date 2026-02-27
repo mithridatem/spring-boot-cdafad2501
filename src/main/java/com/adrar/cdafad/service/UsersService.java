@@ -2,15 +2,19 @@ package com.adrar.cdafad.service;
 
 import com.adrar.cdafad.dto.UsersDTOWrapper;
 import com.adrar.cdafad.dto.UsersInfoDTO;
+import com.adrar.cdafad.entity.Role;
 import com.adrar.cdafad.entity.Users;
 import com.adrar.cdafad.exception.users.UsersListIsEmptyException;
 import com.adrar.cdafad.exception.users.UsersIsNotExistsException;
 import com.adrar.cdafad.exception.users.UsersIsPresentException;
+import com.adrar.cdafad.repository.RoleRepository;
 import com.adrar.cdafad.repository.UsersRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Stream;
 
 @Service
@@ -18,7 +22,8 @@ import java.util.stream.Stream;
 public class UsersService {
 
     private UsersRepository usersRepository;
-
+    private RoleRepository roleRepository;
+    private PasswordEncoder encoder;
     //Ajouter un Users
     public Users createUsers(Users users) {
 
@@ -77,5 +82,17 @@ public class UsersService {
                 .map(
                 UsersDTOWrapper::wrapUsersToUsersInfoDTO
             );
+    }
+
+    public Users registerUser(Users users)
+    {
+        Role role = this.roleRepository.findByName("ROLE_USER").orElse(null);
+
+        if (this.usersRepository.findByUsername(users.getUsername()).isPresent()) {
+            throw new UsersIsPresentException();
+        }
+        users.getRoles().add(role);
+        users.setPasswordHash(encoder.encode(users.getPasswordHash()));
+        return this.usersRepository.save(users);
     }
 }
